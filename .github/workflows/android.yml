@@ -13,13 +13,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Build using the Buildozer Docker action (no local setup)
       - name: Build with Buildozer
+        id: buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
+        env:
+          USER: runner
         with:
           workdir: .
           buildozer_version: stable
-          buildozer_cmd: buildozer -v android debug
+          command: buildozer -v android debug
 
       - name: List files (debug)
         run: |
@@ -30,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conductor-area-apk
-          path: bin/*.apk
+          path: ${{ steps.buildozer.outputs.filename }}
