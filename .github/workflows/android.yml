@@ -17,7 +17,7 @@ jobs:
         id: buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         env:
-          USER: runner
+          USER: root        # <-- key fix for "chown: invalid user"
         with:
           workdir: .
           buildozer_version: stable
